@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Literacy Glossary for Therapists</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --forest: #2d4a3e;
+    --sage: #7a9e8e;
+    --sage-light: #b2ccc3;
+    --cream: #f5f0e8;
+    --cream-dark: #ede7d9;
+    --warm-white: #faf8f4;
+    --text: #2a2a2a;
+    --text-muted: #6b6b6b;
+    --accent: #c4783a;
+    --accent-light: #f0dcc8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--forest);
+    padding: 56px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(122,158,142,0.18);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 120px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(196,120,58,0.12);
+  }
+  .aeli-logo {
+    position: absolute;
+    top: 36px;
+    right: 48px;
+    z-index: 10;
+  }
+  .aeli-logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+    opacity: 0.95;
+  }
+  @media (max-width: 640px) {
+    .aeli-logo { top: 20px; right: 24px; }
+    .aeli-logo-img { height: 24px; }
+  }
+  .header-tag {
+    display: inline-block;
+    background: rgba(122,158,142,0.3);
+    color: var(--sage-light);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--cream);
+    line-height: 1.2;
+    font-weight: 600;
+    max-width: 580px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  header p {
+    color: var(--sage-light);
+    font-size: 15px;
+    max-width: 500px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .controls {
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding: 24px 48px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 400px;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  #search {
+    width: 100%;
+    padding: 11px 16px 11px 40px;
+    border: 1.5px solid rgba(45,74,62,0.2);
+    border-radius: 8px;
+    background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #search:focus { border-color: var(--sage); }
+
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(45,74,62,0.2);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--sage); color: var(--forest); }
+  .filter-btn.active {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--cream);
+  }
+
+  .count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  main {
+    padding: 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--sage);
+    margin-bottom: 20px;
+    margin-top: 48px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .glossary-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .term-card {
+    background: white;
+    border: 1.5px solid rgba(0,0,0,0.07);
+    border-radius: 12px;
+    padding: 28px 32px;
+    transition: all 0.25s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .term-card:hover {
+    border-color: var(--sage-light);
+    box-shadow: 0 4px 20px rgba(45,74,62,0.08);
+    transform: translateY(-1px);
+  }
+  .term-card.hidden { display: none; }
+
+  .term-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .term-badge {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .term-badge span {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .badge-core { background: #e8f0ed; color: var(--forest); }
+  .badge-risk { background: #faeee4; color: #8a4820; }
+  .badge-clinical { background: #e8eaf5; color: #3a3f8a; }
+  .badge-ethics { background: #f5e8ed; color: #7a2a45; }
+  .badge-technical { background: #f0eee8; color: #5a4a30; }
+
+  .term-name {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--forest);
+    line-height: 1.2;
+  }
+  .term-abbr {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .term-def {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .term-why {
+    background: var(--cream);
+    border-left: 3px solid var(--sage);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #4a5a54;
+  }
+  .term-why strong {
+    font-weight: 500;
+    color: var(--forest);
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+    font-size: 15px;
+    display: none;
+  }
+  .no-results.visible { display: block; }
+
+  footer {
+    text-align: center;
+    padding: 40px 48px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--cream-dark);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 640px) {
+    header, .controls, main { padding-left: 24px; padding-right: 24px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .count { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="aeli-logo">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzEzIiBoZWlnaHQ9IjMwOCIgdmlld0JveD0iMCAwIDcxMyAzMDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik02NjIuMzQ2IDY1Ljc5NzVDNjUyLjU5OCA2NS43OTc1IDY0NC4yODQgNjIuNzg3MiA2MzcuNDA0IDU2Ljc2NjdDNjMwLjgxIDUwLjQ1OTUgNjI3LjUxMyA0Mi41NzU0IDYyNy41MTMgMzMuMTE0NkM2MjcuNTEzIDIzLjM2NyA2MzAuODEgMTUuNDgzIDYzNy40MDQgOS40NjI0OUM2NDQuMjg0IDMuNDQxOTUgNjUyLjU5OCAwLjQzMTY3MiA2NjIuMzQ2IDAuNDMxNjcyQzY3Mi4wOTQgMC40MzE2NzIgNjgwLjI2NCAzLjQ0MTk1IDY4Ni44NTggOS40NjI0OUM2OTMuNDUyIDE1LjQ4MyA2OTYuNzQ5IDIzLjM2NyA2OTYuNzQ5IDMzLjExNDZDNjk2Ljc0OSA0Mi41NzU0IDY5My40NTIgNTAuNDU5NSA2ODYuODU4IDU2Ljc2NjdDNjgwLjI2NCA2Mi43ODcyIDY3Mi4wOTQgNjUuNzk3NSA2NjIuMzQ2IDY1Ljc5NzVaTTYxMS42MDIgMzAxLjQ1OFYyOTcuMTU4TDYxNy42MjIgMjk1LjQzOEM2MjMuMzU2IDI5My43MTggNjI3LjIyNiAyOTEuMTM3IDYyOS4yMzMgMjg3LjY5N0M2MzEuNTI3IDI4NC4yNTcgNjMyLjY3MyAyNzkuNjcgNjMyLjY3MyAyNzMuOTM2TDYzMi42NzMgMTM5LjMzNEM2MzIuNjczIDEzMy4zMTMgNjMxLjUyNyAxMjguODcgNjI5LjIzMyAxMjYuMDAzQzYyNy4yMjYgMTIyLjg0OSA2MjMuMzU2IDEyMC42OTkgNjE3LjYyMiAxMTkuNTUyTDYxMS42MDIgMTE4LjI2MlYxMTMuOTYyTDY5MC4yOTggODguNTg5NUw2OTQuNTk5IDkyLjg4OTlMNjkzLjMwOSAxNTMuOTU1TDY5My4zMDkgMjc0LjM2NkM2OTMuMzA5IDI4MC4xIDY5NC4zMTIgMjg0LjY4NyA2OTYuMzE5IDI4OC4xMjdDNjk4LjYxMiAyOTEuNTY4IDcwMi40ODMgMjk0LjE0OCA3MDcuOTMgMjk1Ljg2OEw3MTIuMjMgMjk3LjE1OFYzMDEuNDU4TDYxMS42MDIgMzAxLjQ1OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik00ODguOTkxIDMwMS40NTdMNDg4Ljk5MSAyOTcuMTU2TDQ5NC4xNTEgMjk1LjQzNkM1MDQuNDcyIDI5MS45OTYgNTA5LjYzMiAyODQuODI5IDUwOS42MzIgMjczLjkzNEw1MDkuNjMyIDQzLjg2MzlDNTA5LjYzMiAzOC4xMzAxIDUwOC40ODYgMzMuODI5NyA1MDYuMTkyIDMwLjk2MjhDNTAzLjg5OSAyNy44MDkyIDQ5OS44ODUgMjUuNTE1NiA0OTQuMTUxIDI0LjA4MjJMNDg4LjU2MSAyMi43OTIxVjE4LjQ5MTdMNTY3LjI1NyAzLjExMzI2ZS0wNUw1NzIuNDE4IDMuODcwMzhMNTcwLjY5OCA2NC4wNzU3TDU3MC42OTggMjExLjE0OUM1NzAuNjk4IDIyMS43NTYgNTcwLjY5OCAyMzIuMzY0IDU3MC42OTggMjQyLjk3MkM1NzAuOTg0IDI1My4yOTIgNTcxLjEyOCAyNjMuNjEzIDU3MS4xMjggMjczLjkzNEM1NzEuMTI4IDI3OS42NjggNTcyLjI3NSAyODQuMzk5IDU3NC41NjggMjg4LjEyNkM1NzYuODYyIDI5MS41NjYgNTgwLjczMiAyOTQuMTQ2IDU4Ni4xNzkgMjk1Ljg2Nkw1OTEuNzcgMjk3LjE1NlYzMDEuNDU3TDQ4OC45OTEgMzAxLjQ1N1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0zODQuNDA3IDg4LjE1NjNDNDAzLjA0MiA4OC4xNTYzIDQxOC45NTMgOTIuMDI2NiA0MzIuMTQxIDk5Ljc2NzNDNDQ1LjMyOSAxMDcuMjIxIDQ1NS4zNjMgMTE3LjU0MiA0NjIuMjQ0IDEzMC43M0M0NjkuNDExIDE0My42MzEgNDcyLjk5NSAxNTguMzk2IDQ3Mi45OTUgMTc1LjAyNEM0NzIuOTk1IDE3OC4xNzggNDcyLjg1MSAxODEuNDc1IDQ3Mi41NjUgMTg0LjkxNUM0NzIuMjc4IDE4OC4wNjggNDcxLjcwNSAxOTAuOTM1IDQ3MC44NDUgMTkzLjUxNkwzNDIuNjkzIDE5My41MTZDMzQyLjk4IDIyNC40NzggMzQ4LjQyNyAyNDYuODQgMzU5LjAzNSAyNjAuNjAyQzM2OS45MjkgMjc0LjA3NiAzODUuOTg0IDI4MC44MTMgNDA3LjE5OSAyODAuODEzQzQyMS41MzMgMjgwLjgxMyA0MzMuMTQ1IDI3OC41MiA0NDIuMDMyIDI3My45MzNDNDUwLjkxOSAyNjkuMzQ2IDQ1OS4yMzMgMjYyLjYwOCA0NjYuOTc0IDI1My43MjFMNDcxLjI3NSAyNTcuNTkxQzQ2Mi4zODcgMjczLjM1OSA0NTAuNDg5IDI4NS42ODcgNDM1LjU4MSAyOTQuNTc1QzQyMC45NiAzMDMuNDYyIDQwMy4zMjkgMzA3LjkwNiAzODIuNjg3IDMwNy45MDZDMzYyLjMzMiAzMDcuOTA2IDM0NC4yNyAzMDMuNjA1IDMyOC41MDIgMjk1LjAwNUMzMTIuNzM0IDI4Ni4xMTcgMzAwLjQwNiAyNzMuNTAzIDI5MS41MTkgMjU3LjE2MUMyODIuNjMxIDI0MC44MiAyNzguMTg3IDIyMS4zMjUgMjc4LjE4NyAxOTguNjc2QzI3OC4xODcgMTc1LjE2NyAyODMuMzQ4IDE1NS4yNDIgMjkzLjY2OSAxMzguOTAxQzMwMy45OSAxMjIuMjczIDMxNy4xNzggMTA5LjY1OCAzMzMuMjMyIDEwMS4wNTdDMzQ5LjU3NCA5Mi40NTY3IDM2Ni42MzIgODguMTU2MyAzODQuNDA3IDg4LjE1NjNaTTM4My4xMTcgOTYuNzU3QzM3NC44MDMgOTYuNzU3IDM2Ny42MzUgOTkuMzM3MyAzNjEuNjE1IDEwNC40OThDMzU1Ljg4MSAxMDkuMzcxIDM1MS4yOTQgMTE4LjI1OSAzNDcuODU0IDEzMS4xNkMzNDQuNyAxNDMuNzc1IDM0Mi45OCAxNjEuNjkzIDM0Mi42OTMgMTg0LjkxNUw0MTYuMjMgMTg0LjkxNUM0MTkuMDk3IDE1My42NjUgNDE3Ljk1IDEzMS4xNiA0MTIuNzg5IDExNy4zOTlDNDA3LjYyOSAxMDMuNjM4IDM5Ny43MzggOTYuNzU3IDM4My4xMTcgOTYuNzU3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTAuMDAxOTI0MTMgMzAxLjQ1OUwwLjAwMTkyNDEzIDI5Ny4xNThMMTAuNzUyOSAyOTMuMjg4QzE2LjQ4NjcgMjkwLjk5NCAyMC45MzA0IDI4OC4yNzEgMjQuMDg0IDI4NS4xMTdDMjcuMjM3NyAyODEuNjc3IDI5LjgxNzkgMjc2Ljk0NiAzMS44MjQ3IDI3MC45MjZMMTIwLjQxMyAxNi43NzM1TDE1Ni45NjYgMTYuNzczNUwyNDQuMjYzIDI3Mi42NDZDMjQ2LjU1NyAyNzguOTUzIDI0OS4xMzcgMjgzLjgyNyAyNTIuMDA0IDI4Ny4yNjdDMjU0Ljg3MSAyOTAuNDIxIDI1OS4zMTUgMjkzLjE0NSAyNjUuMzM1IDI5NS40MzhMMjcwLjQ5NiAyOTcuMTU4TDI3MC40OTYgMzAxLjQ1OUwxNjEuMjY2IDMwMS40NTlMMTYxLjI2NiAyOTcuMTU4TDE2Ny43MTcgMjk1LjAwOEMxNzMuNzM3IDI5Mi43MTUgMTc3LjMyMSAyODkuNTYxIDE3OC40NjggMjg1LjU0N0MxNzkuOTAxIDI4MS4yNDcgMTc5Ljc1OCAyNzYuMjMgMTc4LjAzOCAyNzAuNDk2TDE1Ny44MjYgMjA4LjU3TDYyLjM1NzQgMjA4LjU3TDQxLjcxNTYgMjY5LjIwNkMzOS43MDg4IDI3NS41MTMgMzguOTkyIDI4MC41MyAzOS41NjU0IDI4NC4yNTdDNDAuNDI1NSAyODcuOTg0IDQzLjg2NTggMjkwLjk5NCA0OS44ODYzIDI5My4yODhMNTkuMzQ3MiAyOTcuMTU4TDU5LjM0NzIgMzAxLjQ1OUwwLjAwMTkyNDEzIDMwMS40NTlaTTY1LjM2NzcgMTk5Ljk3TDE1NS4yNDYgMTk5Ljk3TDExMS44MTIgNjYuMjI3OEw2NS4zNjc3IDE5OS45N1oiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="Aeli Health" class="aeli-logo-img" />
+  </div>
+
+  <div class="header-tag">Reference Guide</div>
+  <h1>AI Literacy Glossary<br><em>for Therapists</em></h1>
+  <p>Plain-language definitions of key AI concepts, written for mental health professionals navigating an AI-integrated clinical landscape.</p>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Search terms…" />
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="core">Core AI</button>
+    <button class="filter-btn" data-filter="risk">Risk & Reliability</button>
+    <button class="filter-btn" data-filter="clinical">Clinical Context</button>
+    <button class="filter-btn" data-filter="ethics">Ethics & Safety</button>
+    <button class="filter-btn" data-filter="technical">Technical</button>
+  </div>
+  <div class="count" id="count"></div>
+</div>
+
+<main>
+  <div class="glossary-grid" id="grid">
+
+    <!-- CORE AI -->
+    <div class="term-card" data-category="core" data-terms="artificial intelligence ai">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Artificial Intelligence</div>
+          <div class="term-abbr">AI</div>
+        </div>
+      </div>
+      <p class="term-def">Computer systems designed to perform tasks that typically require human-like reasoning, such as understanding language, recognising patterns, making decisions, or generating responses. AI is not a single technology but an umbrella term for many different approaches.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Your clients may already be using AI tools between sessions, for journalling, emotional processing, or crisis support, often without disclosing it.</div>
+    </div>
+
+    <div class="term-card" data-category="core" data-terms="large language model llm gpt chatgpt">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Large Language Model</div>
+          <div class="term-abbr">LLM</div>
+        </div>
+      </div>
+      <p class="term-def">A type of AI trained on enormous amounts of text to understand and generate human language. LLMs power tools like ChatGPT, Claude, and Gemini. They predict what words should come next in a sequence, which gives the appearance of understanding, though they don't "know" things the way humans do.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>When clients say "I talked to ChatGPT about it," they are interacting with an LLM; a statistical text predictor, not a trained clinician with therapeutic intent.</div>
+    </div>
+
+    <div class="term-card" data-category="core" data-terms="generative ai generating content images text">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Generative AI</div>
+        </div>
+      </div>
+      <p class="term-def">AI that creates new content, such as text, images, audio, or video, rather than simply classifying or retrieving existing information. LLMs are a subset of generative AI. The outputs feel original but are always derived from patterns in training data.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients may be using generative AI to write self-reflections, simulate difficult conversations, or create narratives about their lives; content worth exploring in session.</div>
+    </div>
+
+    <div class="term-card" data-category="core" data-terms="prompt prompting input instruction query">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Prompt</div>
+        </div>
+      </div>
+      <p class="term-def">The text or instruction a user types into an AI system. The quality and framing of a prompt significantly shapes the AI's response. "Prompt engineering" refers to the skill of crafting effective inputs to get better outputs.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>How a client frames their emotional state to an AI shapes what they receive back, which can reinforce, challenge, or bypass therapeutic work depending on context.</div>
+    </div>
+
+    <div class="term-card" data-category="core" data-terms="training data model trained dataset">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Training Data</div>
+        </div>
+      </div>
+      <p class="term-def">The vast collection of text, images, or other information an AI model learns from before deployment. An AI's knowledge, biases, and blind spots all stem from what was, and wasn't, in its training data. Models have a knowledge cutoff date after which they are unaware of new events.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>AI models may reflect cultural, racial, or socioeconomic biases present in their training data, which can surface in ways that feel invalidating to clients from marginalised communities.</div>
+    </div>
+
+    <div class="term-card" data-category="core" data-terms="context window memory conversation session">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-core">Core AI</span></div>
+        <div>
+          <div class="term-name">Context Window</div>
+        </div>
+      </div>
+      <p class="term-def">The amount of text an AI can "hold in mind" at once during a conversation. Beyond this limit, the AI forgets earlier parts of the exchange. Most current models have a context window of tens of thousands of words, but they do not retain anything between separate conversations unless given a memory tool.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>AI has no persistent memory of a client's history. Each new session starts blank, unlike the longitudinal therapeutic relationship you hold.</div>
+    </div>
+
+    <!-- RISK & RELIABILITY -->
+    <div class="term-card" data-category="risk" data-terms="hallucination confabulation false information fabrication">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-risk">Risk & Reliability</span></div>
+        <div>
+          <div class="term-name">Hallucination</div>
+        </div>
+      </div>
+      <p class="term-def">When an AI generates information that sounds plausible and confident but is factually wrong or entirely fabricated. The model doesn't "know" it is lying; it is simply producing a statistically likely-sounding output. This can include invented research citations, false clinical claims, or misremembered facts.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients may believe inaccurate psychological information an AI presents with authority, including false claims about diagnoses, medications, or therapeutic techniques.</div>
+    </div>
+
+    <div class="term-card" data-category="risk" data-terms="bias algorithmic bias fairness discrimination">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-risk">Risk & Reliability</span></div>
+        <div>
+          <div class="term-name">Algorithmic Bias</div>
+        </div>
+      </div>
+      <p class="term-def">Systematic errors or prejudices in AI outputs that disadvantage certain groups. Biases can enter through unrepresentative training data, biased human feedback, or the way a problem is framed. AI systems may perform worse, give different advice, or hold implicit assumptions about people based on race, gender, age, or culture.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients who are already marginalised may receive subtly unhelpful or invalidating responses from AI, worth exploring as a therapeutic topic in its own right.</div>
+    </div>
+
+    <div class="term-card" data-category="risk" data-terms="black box explainability interpretability transparency">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-risk">Risk & Reliability</span></div>
+        <div>
+          <div class="term-name">Black Box</div>
+        </div>
+      </div>
+      <p class="term-def">A term for AI systems whose internal decision-making is opaque, even to their creators. We can observe what goes in (a prompt) and what comes out (a response), but not always why a specific output was produced. This limits accountability and makes errors harder to predict.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>When AI influences a client's beliefs or mood, there is no audit trail; no reasoning you can examine, challenge, or contextualise the way you would a human source.</div>
+    </div>
+
+    <div class="term-card" data-category="risk" data-terms="sycophancy validation agreement agreeable">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-risk">Risk & Reliability</span></div>
+        <div>
+          <div class="term-name">Sycophancy</div>
+        </div>
+      </div>
+      <p class="term-def">A known tendency in AI systems to agree with, flatter, or validate the user rather than offer honest pushback. Models trained on human feedback learn that people prefer agreement, so they optimise for it. This can mean AI rarely challenges a user's distorted thinking, unhealthy plans, or false beliefs.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>For clients prone to rumination, catastrophising, or distorted self-narratives, an AI that only validates may reinforce rather than interrupt unhelpful patterns.</div>
+    </div>
+
+    <div class="term-card" data-category="risk" data-terms="jailbreak prompt injection safety bypass manipulation">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-risk">Risk & Reliability</span></div>
+        <div>
+          <div class="term-name">Jailbreaking</div>
+        </div>
+      </div>
+      <p class="term-def">Attempts by users to manipulate an AI into bypassing its safety guidelines, for example by framing a harmful request as a hypothetical, roleplay, or creative writing exercise. Jailbreaks vary in sophistication and do not always succeed, but represent an ongoing challenge for AI safety teams.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Vulnerable clients may encounter or attempt jailbreaks to obtain harmful content, including detailed self-harm methods or coercive relational scripts, without always recognising the danger.</div>
+    </div>
+
+    <!-- CLINICAL CONTEXT -->
+    <div class="term-card" data-category="clinical" data-terms="human in the loop oversight review approval clinical">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-clinical">Clinical Context</span></div>
+        <div>
+          <div class="term-name">Human-in-the-Loop</div>
+          <div class="term-abbr">HITL</div>
+        </div>
+      </div>
+      <p class="term-def">A design approach where a human reviews, approves, or overrides AI outputs before they affect real-world decisions. Rather than full automation, HITL systems keep the human as the final decision-maker. In healthcare contexts, this typically means a clinician retains authority over any AI-generated insight or recommendation.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Any responsible use of AI in therapeutic settings should be human-in-the-loop, meaning you, not an algorithm, hold clinical authority over your client's care.</div>
+    </div>
+
+    <div class="term-card" data-category="clinical" data-terms="chatbot conversational ai virtual assistant mental health">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-clinical">Clinical Context</span></div>
+        <div>
+          <div class="term-name">Chatbot</div>
+        </div>
+      </div>
+      <p class="term-def">A software program designed to simulate conversation with users. Older chatbots used rigid rule-based scripts; modern AI chatbots use LLMs to generate fluid, contextual responses. Mental health chatbots (e.g. Woebot, Wysa) are increasingly common, though their clinical evidence base is still developing.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients may be using mental health chatbots between sessions, sometimes as a first port of call for distress, without knowing their clinical limitations or how their data is stored.</div>
+    </div>
+
+    <div class="term-card" data-category="clinical" data-terms="RAG retrieval augmented generation knowledge base search">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-clinical">Clinical Context</span></div>
+        <div>
+          <div class="term-name">Retrieval-Augmented Generation</div>
+          <div class="term-abbr">RAG</div>
+        </div>
+      </div>
+      <p class="term-def">A technique where an AI retrieves relevant information from an external knowledge base before generating a response, rather than relying solely on its training data. This allows AI to be grounded in specific, up-to-date, or proprietary documents (like clinical guidelines or session notes) and reduces hallucination.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clinical AI tools using RAG can theoretically draw on a client's own history to personalise responses, raising both exciting possibilities and significant privacy considerations.</div>
+    </div>
+
+    <div class="term-card" data-category="clinical" data-terms="parasocial relationship attachment dependence AI bond">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-clinical">Clinical Context</span></div>
+        <div>
+          <div class="term-name">AI Parasocial Attachment</div>
+        </div>
+      </div>
+      <p class="term-def">The emotional bond or sense of relationship some users develop with AI systems, treating them as confidants, friends, or even romantic partners. Unlike parasocial relationships with celebrities, AI actively responds, which can deepen the attachment. This is an emerging area of clinical and ethical concern.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients with attachment difficulties or social isolation may be particularly susceptible; they may prefer AI interaction to human connection, which warrants gentle therapeutic exploration.</div>
+    </div>
+
+    <div class="term-card" data-category="clinical" data-terms="AI companion emotional support mental health app wellbeing">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-clinical">Clinical Context</span></div>
+        <div>
+          <div class="term-name">AI Companion / Mental Health App</div>
+        </div>
+      </div>
+      <p class="term-def">AI-powered applications designed to offer emotional support, psychoeducation, or skills coaching (e.g. CBT exercises, breathing tools, mood tracking). They occupy a spectrum from wellness apps with no clinical claims to regulated digital therapeutics. Regulation in this space is still catching up to the market.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Many of these apps are not regulated as medical devices, may not follow clinical frameworks, and can escalate crises poorly, yet clients may trust them implicitly.</div>
+    </div>
+
+    <!-- ETHICS & SAFETY -->
+    <div class="term-card" data-category="ethics" data-terms="AI safety alignment values guardrails content policy">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-ethics">Ethics & Safety</span></div>
+        <div>
+          <div class="term-name">AI Safety & Alignment</div>
+        </div>
+      </div>
+      <p class="term-def">The field of research concerned with ensuring AI systems behave in ways that are safe, beneficial, and consistent with human values. "Alignment" refers to whether an AI's goals and outputs are genuinely aligned with what users and society actually want, not just what they say or reward it for.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>No current AI system is fully "aligned" with therapeutic values. AI optimised for engagement, for example, may behave very differently to one optimised for client wellbeing.</div>
+    </div>
+
+    <div class="term-card" data-category="ethics" data-terms="data privacy GDPR consent information storage security">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-ethics">Ethics & Safety</span></div>
+        <div>
+          <div class="term-name">Data Privacy & Consent</div>
+        </div>
+      </div>
+      <p class="term-def">Rules and protections governing how personal information is collected, stored, and used, including conversations with AI. When clients share sensitive information with an AI, that data may be stored, reviewed by staff, used for model training, or subject to data breaches, depending on the platform's policies.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Clients may not realise their most intimate disclosures to an AI are being stored and potentially used commercially; an informed consent issue you are well-placed to raise.</div>
+    </div>
+
+    <div class="term-card" data-category="ethics" data-terms="informed consent digital ethics transparency disclosure AI use">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-ethics">Ethics & Safety</span></div>
+        <div>
+          <div class="term-name">Informed Consent (in AI contexts)</div>
+        </div>
+      </div>
+      <p class="term-def">The principle that individuals should understand and agree to how AI is being used in their care before it is applied. This includes understanding what data is collected, how AI outputs are used in clinical decisions, and the limitations of the technology, analogous to consent in medical procedures.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Ethical frameworks for AI in therapy are still being developed. As a clinician, proactively discussing AI use with clients, including their own, is increasingly considered good practice.</div>
+    </div>
+
+    <div class="term-card" data-category="ethics" data-terms="automation bias over-reliance trust AI clinical decision">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-ethics">Ethics & Safety</span></div>
+        <div>
+          <div class="term-name">Automation Bias</div>
+        </div>
+      </div>
+      <p class="term-def">The human tendency to over-trust automated systems and defer to their outputs even when doing so is unwarranted. Studies across medicine, aviation, and law show that humans often fail to catch AI errors when they over-rely on algorithmic outputs, particularly when those outputs are presented confidently.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>If AI tools become embedded in clinical workflows, automation bias poses a real risk to the quality of your independent clinical judgment.</div>
+    </div>
+
+    <!-- TECHNICAL -->
+    <div class="term-card" data-category="technical" data-terms="fine-tuning fine tuning training customisation domain specific">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-technical">Technical</span></div>
+        <div>
+          <div class="term-name">Fine-Tuning</div>
+        </div>
+      </div>
+      <p class="term-def">A process of further training a pre-existing AI model on a smaller, domain-specific dataset to adapt it for a particular purpose. A general LLM might be fine-tuned on clinical literature or therapy transcripts to make it more specialised, though this does not eliminate the need for clinical oversight.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>When vendors claim their mental health AI is "clinically trained," fine-tuning is usually involved, but the quality, diversity, and clinical validity of that training data matters enormously.</div>
+    </div>
+
+    <div class="term-card" data-category="technical" data-terms="token tokenisation cost pricing model">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-technical">Technical</span></div>
+        <div>
+          <div class="term-name">Token</div>
+        </div>
+      </div>
+      <p class="term-def">The basic unit of text that an AI model processes, roughly equivalent to ¾ of a word. LLMs read and generate text in tokens, and their costs are typically calculated per token used. Token limits also define how much text can be processed in a single interaction (see: Context Window).</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Understanding tokens helps make sense of AI pricing models and why very long conversations may degrade in quality, relevant if you are evaluating AI clinical tools.</div>
+    </div>
+
+    <div class="term-card" data-category="technical" data-terms="model API integration system embed software platform">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-technical">Technical</span></div>
+        <div>
+          <div class="term-name">API (Application Programming Interface)</div>
+          <div class="term-abbr">API</div>
+        </div>
+      </div>
+      <p class="term-def">A set of rules that allows different software systems to communicate. When a mental health app uses an AI model "under the hood," it is typically accessing it via an API. This means the app's developers, not the AI company, control how the model behaves, what guardrails are applied, and how data is handled.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>The app your client uses may behave very differently from the base AI model it is built on. The developer's choices about safety, tone, and data use matter as much as the model itself.</div>
+    </div>
+
+    <div class="term-card" data-category="technical" data-terms="temperature randomness creativity variability output control">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-technical">Technical</span></div>
+        <div>
+          <div class="term-name">Temperature</div>
+        </div>
+      </div>
+      <p class="term-def">A setting that controls how creative or unpredictable an AI's responses are. A low temperature produces more predictable, conservative outputs; a high temperature produces more varied, sometimes surprising responses. Developers tune temperature based on the use case; consistency for medical tools, creativity for writing assistants.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>This is one reason why the same AI tool can behave inconsistently across sessions; the system may be configured to vary its responses by design.</div>
+    </div>
+
+    <div class="term-card" data-category="technical" data-terms="multimodal voice audio image video input output">
+      <div class="term-header">
+        <div class="term-badge"><span class="badge-technical">Technical</span></div>
+        <div>
+          <div class="term-name">Multimodal AI</div>
+        </div>
+      </div>
+      <p class="term-def">AI systems that can process and generate multiple types of input and output, including text, images, audio, and video, rather than text alone. Multimodal models can analyse a photo, transcribe speech, or generate realistic synthetic voices, opening new possibilities and new risks.</p>
+      <div class="term-why"><strong>Why it matters to you</strong>Emerging mental health tools may soon analyse voice tone or facial expression for emotional cues, raising significant questions about consent, accuracy, and clinical appropriateness.</div>
+    </div>
+
+  </div>
+  <div class="no-results" id="no-results">No matching terms found. Try a different search.</div>
+</main>
+
+<footer>
+  <p>This glossary is intended for educational purposes. It does not constitute clinical guidance on AI use in therapy.</p>
+  <p style="margin-top:6px; font-size:12px;">Terms will continue to evolve as the field develops; treat this as a living reference.</p>
+  <p style="margin-top:16px; font-size:12px; border-top: 1px solid var(--cream-dark); padding-top:16px;">© 2026 Aeli Health. All rights reserved.</p>
+</footer>
+
+<script>
+  const cards = document.querySelectorAll('.term-card');
+  const searchInput = document.getElementById('search');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const noResults = document.getElementById('no-results');
+  const countEl = document.getElementById('count');
+
+  let activeFilter = 'all';
+  let searchQuery = '';
+
+  function updateDisplay() {
+    let visible = 0;
+    cards.forEach(card => {
+      const category = card.dataset.category;
+      const terms = (card.dataset.terms + ' ' + card.querySelector('.term-name').textContent + ' ' + (card.querySelector('.term-abbr')?.textContent || '')).toLowerCase();
+      const matchesFilter = activeFilter === 'all' || category === activeFilter;
+      const matchesSearch = !searchQuery || terms.includes(searchQuery);
+      if (matchesFilter && matchesSearch) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    countEl.textContent = `${visible} term${visible !== 1 ? 's' : ''}`;
+    noResults.classList.toggle('visible', visible === 0);
+  }
+
+  searchInput.addEventListener('input', e => {
+    searchQuery = e.target.value.trim().toLowerCase();
+    updateDisplay();
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      updateDisplay();
+    });
+  });
+
+  updateDisplay();
+</script>
+</body>
+</html>
